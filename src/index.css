@@ -1,0 +1,524 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Advanced Cyber Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* Custom global styles for Tech Feud - Enhanced Cyber Theme */
+body {
+  margin: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #0a0a0a;
+  color: #00ffff;
+  overflow-x: hidden;
+}
+
+/* Cyber Background Effects */
+.cyber-bg {
+  position: relative;
+  background: 
+    radial-gradient(ellipse at top, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(57, 255, 20, 0.1) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 48%, rgba(0, 255, 255, 0.03) 49%, rgba(0, 255, 255, 0.03) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(57, 255, 20, 0.03) 49%, rgba(57, 255, 20, 0.03) 51%, transparent 52%);
+  background-size: 100% 100%, 100% 100%, 20px 20px, 20px 20px;
+}
+
+.cyber-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,255,0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: matrix-rain 20s linear infinite;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Scan Line Effect */
+.scan-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ffff, transparent);
+  animation: scan-line 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Enhanced Game Board */
+.game-board-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 3px;
+  background: 
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 2px solid #00ffff;
+  position: relative;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 255, 0.3),
+    inset 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.game-board-grid::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00ffff, #39ff14, #bf00ff, #ff1493);
+  border-radius: 1rem;
+  z-index: -1;
+  animation: glow-pulse 2s ease-in-out infinite alternate;
+}
+
+/* Enhanced Answer Slots */
+.answer-slot {
+  background: 
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+  border: 2px solid #333;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #00ffff;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.answer-slot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.answer-slot:hover::before {
+  left: 100%;
+}
+
+.answer-slot.revealed {
+  background: 
+    linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-color: #00ffff;
+  color: #39ff14;
+  animation: reveal-answer 0.8s ease-out;
+  box-shadow: 
+    0 0 15px rgba(57, 255, 20, 0.5),
+    inset 0 0 15px rgba(57, 255, 20, 0.1);
+}
+
+@keyframes reveal-answer {
+  0% {
+    transform: rotateY(90deg) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: rotateY(45deg) scale(1.1);
+  }
+  100% {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Enhanced Quiz Cards */
+.quiz-card {
+  background: 
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  border: 1px solid #333;
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.05) 50%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.quiz-card:hover {
+  border-color: #00ffff;
+  box-shadow: 
+    0 10px 30px rgba(0, 255, 255, 0.2),
+    0 0 20px rgba(0, 255, 255, 0.1);
+  transform: translateY(-5px);
+}
+
+.quiz-card:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced Primary Button */
+.btn-primary {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid #00ffff;
+  color: #00ffff;
+  font-weight: 700;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+  color: #39ff14;
+  border-color: #39ff14;
+  box-shadow: 
+    0 0 25px rgba(57, 255, 20, 0.5),
+    0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+/* Enhanced Leaderboard Entry */
+.leaderboard-entry {
+  background: 
+    linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+  border-left: 4px solid #00ffff;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.leaderboard-entry::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #00ffff, #39ff14, #bf00ff);
+  transition: width 0.3s ease;
+}
+
+.leaderboard-entry:hover {
+  background: 
+    linear-gradient(90deg, #16213e 0%, #0f3460 100%);
+  border-left-color: #39ff14;
+  transform: translateX(10px);
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+}
+
+.leaderboard-entry:hover::before {
+  width: 8px;
+}
+
+/* Cyber Text Effects */
+.cyber-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #00ffff, #39ff14, #bf00ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hologram 3s ease-in-out infinite;
+}
+
+.neon-text {
+  color: #00ffff;
+  text-shadow: 
+    0 0 5px #00ffff,
+    0 0 10px #00ffff,
+    0 0 15px #00ffff;
+  animation: neon-flicker 2s ease-in-out infinite alternate;
+}
+
+.matrix-text {
+  font-family: 'JetBrains Mono', monospace;
+  color: #39ff14;
+  text-shadow: 0 0 10px #39ff14;
+}
+
+/* Pulse Animation Enhanced */
+.pulse-animation {
+  animation: glow-pulse 2s ease-in-out infinite alternate;
+}
+
+/* Loading Spinner */
+.cyber-spinner {
+  border: 3px solid transparent;
+  border-top: 3px solid #00ffff;
+  border-right: 3px solid #39ff14;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Glitch Effect */
+.glitch {
+  position: relative;
+  color: #00ffff;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: glitch 1s linear infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-1 0.5s linear infinite reverse;
+  color: #ff00ff;
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-2 0.5s linear infinite reverse;
+  color: #00ff00;
+  z-index: -2;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(-2px, 2px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(2px, 2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, -2px); }
+  40% { transform: translate(2px, 2px); }
+  60% { transform: translate(2px, -2px); }
+  80% { transform: translate(-2px, 2px); }
+}
+
+/* Animation delay utilities */
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Enhanced Mobile Responsive Design */
+@media (max-width: 768px) {
+  /* Mobile Typography */
+  .holographic {
+    font-size: 2.5rem !important;
+    line-height: 1.1;
+  }
+  
+  .matrix-text {
+    font-size: 1rem !important;
+    letter-spacing: 0.1em;
+  }
+  
+  /* Mobile Game Board */
+  .game-board-grid {
+    padding: 0.75rem;
+    gap: 2px;
+    border-radius: 0.75rem;
+  }
+  
+  .answer-slot {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    letter-spacing: 1px;
+  }
+  
+  /* Mobile Cards */
+  .quiz-card {
+    padding: 1.25rem;
+    border-radius: 1rem;
+    margin: 0.5rem;
+  }
+  
+  /* Mobile Buttons */
+  .btn-primary {
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+  
+  /* Mobile Forms */
+  input[type="email"], 
+  input[type="password"], 
+  input[type="text"], 
+  textarea, 
+  select {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+  }
+  
+  /* Mobile Leaderboard */
+  .leaderboard-entry {
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.75rem;
+  }
+  
+  /* Mobile Background Effects - Reduced for Performance */
+  body::before {
+    background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%;
+    opacity: 0.5;
+  }
+  
+  .cyber-bg::before {
+    background-size: 30px 30px;
+    opacity: 0.2;
+  }
+  
+  /* Mobile Specific Animations - Reduced for Performance */
+  .holographic {
+    animation-duration: 4s;
+  }
+  
+  .matrix-text {
+    animation-duration: 0.2s;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra Small Mobile Screens */
+  .holographic {
+    font-size: 2rem !important;
+  }
+  
+  .quiz-card {
+    padding: 1rem;
+    margin: 0.25rem;
+  }
+  
+  .btn-primary {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .answer-slot {
+    padding: 0.625rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Reduce spacing for very small screens */
+  .game-board-grid {
+    padding: 0.5rem;
+    gap: 1px;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices */
+  .btn-primary {
+    min-height: 48px; /* Touch target size */
+    padding: 1rem 1.5rem;
+  }
+  
+  .answer-slot {
+    min-height: 48px;
+    padding: 1rem;
+  }
+  
+  input[type="email"], 
+  input[type="password"], 
+  input[type="text"] {
+    min-height: 48px;
+    padding: 1rem;
+  }
+  
+  /* Disable hover effects on touch devices */
+  .quiz-card:hover,
+  .leaderboard-entry:hover,
+  .answer-slot:hover {
+    transform: none;
+    box-shadow: inherit;
+  }
+  
+  /* Reduce animations on mobile for better performance */
+  .cyber-bg::before,
+  body::before {
+    animation: none;
+  }
+}
