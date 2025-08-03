@@ -8,8 +8,8 @@ echo "===================================="
 echo ""
 
 # Check if server is running
-if curl -s http://localhost:5173 > /dev/null; then
-    echo "✅ Server is running on http://localhost:5173"
+if curl -s http://localhost:5175 > /dev/null; then
+    echo "✅ Server is running on http://localhost:5175"
 else
     echo "❌ Server is not running! Please start with: npm run dev"
     exit 1
@@ -19,19 +19,19 @@ echo ""
 echo "📱 Available Panels:"
 echo "==================="
 echo "1. 👑 Admin Panel (Password: admin2025)"
-echo "   URL: http://localhost:5173/admin"
+echo "   URL: http://localhost:5175/admin"
 echo ""
 echo "2. 🎤 Presenter View (For main screen/projector)"
-echo "   URL: http://localhost:5173/presenter"
+echo "   URL: http://localhost:5175/presenter"
 echo ""
 echo "3. 🏠 Landing Page (For participants)"
-echo "   URL: http://localhost:5173/"
+echo "   URL: http://localhost:5175/"
 echo ""
 echo "4. 👥 Audience View (For spectators)"
-echo "   URL: http://localhost:5173/audience"
+echo "   URL: http://localhost:5175/audience"
 echo ""
 echo "5. 🏆 Leaderboard (For results)"
-echo "   URL: http://localhost:5173/leaderboard"
+echo "   URL: http://localhost:5175/leaderboard"
 echo ""
 
 # Function to display URL for manual opening
@@ -66,10 +66,10 @@ case $choice in
     [Aa])
         echo ""
         echo "🔴 Opening Admin Panel..."
-        open_url "http://localhost:5173/admin"
+        open_url "http://localhost:5175/admin"
         sleep 2
         echo "🎤 Opening Presenter View..."
-        open_url "http://localhost:5173/presenter"
+        open_url "http://localhost:5175/presenter"
         echo ""
         echo "✅ Both panels opened!"
         echo "💡 Admin Panel Password: admin2025"
@@ -77,15 +77,15 @@ case $choice in
     [Bb])
         echo ""
         echo "🔴 Opening all panels..."
-        open_url "http://localhost:5173/admin"
+        open_url "http://localhost:5175/admin"
         sleep 1
-        open_url "http://localhost:5173/presenter"
+        open_url "http://localhost:5175/presenter"
         sleep 1
-        open_url "http://localhost:5173/"
+        open_url "http://localhost:5175/"
         sleep 1
-        open_url "http://localhost:5173/audience"
+        open_url "http://localhost:5175/audience"
         sleep 1
-        open_url "http://localhost:5173/leaderboard"
+        open_url "http://localhost:5175/leaderboard"
         echo ""
         echo "✅ All panels opened!"
         echo "💡 Admin Panel Password: admin2025"
@@ -94,11 +94,11 @@ case $choice in
         echo ""
         echo "📋 All URLs:"
         echo "============"
-        echo "Admin:      http://localhost:5173/admin"
-        echo "Presenter:  http://localhost:5173/presenter"
-        echo "Landing:    http://localhost:5173/"
-        echo "Audience:   http://localhost:5173/audience"
-        echo "Leaderboard: http://localhost:5173/leaderboard"
+        echo "Admin:      http://localhost:5175/admin"
+        echo "Presenter:  http://localhost:5175/presenter"
+        echo "Landing:    http://localhost:5175/"
+        echo "Audience:   http://localhost:5175/audience"
+        echo "Leaderboard: http://localhost:5175/leaderboard"
         ;;
     [Qq])
         echo "👋 Goodbye!"

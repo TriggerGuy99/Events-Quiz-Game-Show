@@ -7,71 +7,77 @@ import { auth } from '../firebase';
 
 const Leaderboard = () => {
   const [user] = useAuthState(auth);
-  const [users, setUsers] = useState([]);
-  const [appState, setAppState] = useState({ currentPhase: 'waiting' });
+  const [participants, setParticipants] = useState([]);
+  const [gameState, setGameState] = useState({ 
+    isQuizActive: false, 
+    showLeaderboard: false,
+    currentQuestionId: null 
+  });
   const [userRank, setUserRank] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Listen to users collection for real-time updates
-    const usersQuery = query(collection(db, 'users'), orderBy('quizScore', 'desc'));
-    const unsubscribeUsers = onSnapshot(usersQuery, (snapshot) => {
-      const usersData = snapshot.docs.map((doc, index) => ({
+    // Listen to participants collection for real-time updates
+    const participantsQuery = query(collection(db, 'participants'), orderBy('score', 'desc'));
+    const unsubscribeParticipants = onSnapshot(participantsQuery, (snapshot) => {
+      const participantsData = snapshot.docs.map((doc, index) => ({
         id: doc.id,
         rank: index + 1,
         ...doc.data()
       }));
-      setUsers(usersData);
+      setParticipants(participantsData);
 
       // Find current user's rank
       if (user) {
-        const currentUser = usersData.find(u => u.email === user.email);
+        const currentUser = participantsData.find(u => u.email === user.email);
         setUserRank(currentUser?.rank || null);
       }
     });
 
-    // Listen to app state
-    const unsubscribeAppState = onSnapshot(doc(db, 'config', 'appState'), (doc) => {
+    // Listen to game state
+    const unsubscribeGameState = onSnapshot(doc(db, 'config', 'gameState'), (doc) => {
       if (doc.exists()) {
         const state = doc.data();
-        setAppState(state);
+        setGameState(state);
         
-        // Redirect based on app state changes
-        if (state.currentPhase === 'liveGame') {
-          // If user is in top 10, they're a finalist and should see audience view
-          // Otherwise, redirect to audience view anyway
+        // Redirect based on game state changes
+        if (state.isQuizActive) {
+          // Redirect to audience view if quiz becomes active
           setTimeout(() => {
             navigate('/audience');
-          }, 5000);
+          }, 3000);
         }
       }
     });
 
     return () => {
-      unsubscribeUsers();
-      unsubscribeAppState();
+      unsubscribeParticipants();
+      unsubscribeGameState();
     };
   }, [user, navigate]);
 
-  const topFinalists = users.slice(0, 10);
+  const topFinalists = participants.slice(0, 10);
   const isFinalist = user && topFinalists.some(f => f.email === user.email);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 py-8 px-4">
+    <div className="min-h-screen cyber-bg py-4 sm:py-8 px-2 sm:px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            🏆 <span className="text-primary-400">Tech Feud</span> Leaderboard 🏆
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl font-black holographic mb-4 font-['Orbitron'] tracking-wider">
+            🏆 TECH FEUD LEADERBOARD 🏆
           </h1>
-          <p className="text-gray-400">Qualifier Quiz Results</p>
+          <div className="h-1 w-24 mx-auto bg-gradient-to-r from-cyan via-neon to-purple animate-pulse mb-4 shadow-lg shadow-cyan/50"></div>
+          <p className="text-cyan/80 font-mono text-sm sm:text-base">Final Quiz Results</p>
           
           {/* User Status */}
           {user && (
             <div className="mt-6">
-              <div className={`inline-flex items-center px-6 py-3 rounded-full ${
-                isFinalist ? 'bg-gradient-to-r from-green-600 to-green-500' : 'bg-gradient-to-r from-gray-600 to-gray-500'
-              } text-white font-semibold`}>
+              <div className={`inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-lg border-2 font-semibold font-mono text-sm sm:text-base ${
+                isFinalist 
+                  ? 'bg-neon/20 border-neon text-neon shadow-lg shadow-neon/30' 
+                  : 'bg-cyan/20 border-cyan text-cyan shadow-lg shadow-cyan/30'
+              }`}>
                 {isFinalist ? (
                   <>
                     🎉 Congratulations! You're a finalist! (Rank #{userRank})
@@ -86,11 +92,36 @@ const Leaderboard = () => {
           )}
         </div>
 
+        {/* Game Status */}
+        <div className="quiz-card mb-6 sm:mb-8 text-center">
+          <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 ${
+            gameState.isQuizActive ? 'bg-cyan/20 border-2 border-cyan' :
+            gameState.showLeaderboard ? 'bg-neon/20 border-2 border-neon' :
+            'bg-purple/20 border-2 border-purple'
+          }`}>
+            {gameState.isQuizActive && <span className="text-2xl">🎮</span>}
+            {gameState.showLeaderboard && <span className="text-2xl">🏆</span>}
+            {!gameState.isQuizActive && !gameState.showLeaderboard && <span className="text-2xl">⏳</span>}
+          </div>
+          
+          <h2 className="text-xl font-bold text-white mb-2">
+            {gameState.isQuizActive && 'Tech Feud in Progress'}
+            {gameState.showLeaderboard && 'Final Results'}
+            {!gameState.isQuizActive && !gameState.showLeaderboard && 'Quiz Completed'}
+          </h2>
+          
+          <p className="text-gray-400 text-sm font-mono">
+            {gameState.isQuizActive && 'Live competition happening now!'}
+            {gameState.showLeaderboard && 'These are the final standings'}
+            {!gameState.isQuizActive && !gameState.showLeaderboard && 'Waiting for next phase'}
+          </p>
+        </div>
+
         {/* Finalists Section */}
         <div className="mb-12">
           <div className="quiz-card">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">
-              🌟 Finalists - Advancing to Live Game 🌟
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 text-center font-['Orbitron']">
+              🌟 Top Finalists 🌟
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

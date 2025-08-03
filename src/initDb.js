@@ -83,6 +83,30 @@ const initializeLiveGameQuestions = async () => {
         { text: "Heroku", points: 3 }
       ],
       createdAt: new Date()
+    },
+    {
+      id: 5,
+      question: "Name a popular frontend framework or library",
+      answers: [
+        { text: "React", points: 50 },
+        { text: "Vue.js", points: 25 },
+        { text: "Angular", points: 15 },
+        { text: "Svelte", points: 7 },
+        { text: "jQuery", points: 3 }
+      ],
+      createdAt: new Date()
+    },
+    {
+      id: 6,
+      question: "Name a version control system",
+      answers: [
+        { text: "Git", points: 60 },
+        { text: "SVN", points: 20 },
+        { text: "Mercurial", points: 10 },
+        { text: "Perforce", points: 7 },
+        { text: "Bazaar", points: 3 }
+      ],
+      createdAt: new Date()
     }
   ];
 
